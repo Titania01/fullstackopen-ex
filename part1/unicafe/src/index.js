@@ -20,7 +20,9 @@ const App = () => {
       <button onClick={() => setBad(bad + 1)}>
         bad
         </button>
-      <Statistics good ={good} bad={bad} neutral={neutral} />
+      {/* <Statistics good ={good} bad={bad} neutral={neutral} /> */}
+
+      {(good || neutral || bad) ?    <Statistics good ={good} bad={bad} neutral={neutral} /> :<h2>No Feedback Given</h2>}
     </div>
   )
 }
