@@ -21,16 +21,16 @@ const App = () => {
       <Button handleEvent = {() => setNeutral(neutral+1)} text="neutral"/>
       <Button handleEvent = {() => setBad(bad+1)} text="bad"/>
       {
-        (good || neutral || bad) ? (
-          <>
+        (good || neutral || bad) ? <table>
+          <tbody>
           <Statistics text= "Good" execution={good}/>
           <Statistics text= "Neutral" execution={neutral}/>
           <Statistics text= "Bad" execution={bad}/>
           <Statistics text= "All" execution={all = good + neutral + bad}/>
           <Statistics text= "Average" execution={(good *1)+(neutral*0)+(bad*-1)/ 3}/>
-          <Statistics text= "Positive" execution={(good/all)*1 *100 || 0 }/>
-          </>
-        ) : <h2>No Feedback Given</h2>
+          <Statistics text= "Positive" execution={((good/all)*1 *100 || 0 ) + "%"}/>
+          </tbody>
+          </table> : <h2>No Feedback Given</h2>
       }
        {/* <h2>Give Feedback</h2>
        <button onClick={() => setGood(good + 1)}>

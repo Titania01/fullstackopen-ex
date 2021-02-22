@@ -6,8 +6,9 @@ const Statistics = ({text, execution}) => {
 
 
   return (
-    <div>
-      <h2>{text} {execution}</h2>
+    <tr>
+      <td>{text} </td>
+      <td>{execution}</td>
       {/* <span>
         good {good} <br/> 
         neutral {neutral} <br/> 
@@ -16,7 +17,7 @@ const Statistics = ({text, execution}) => {
         Average {total/3} <br/>
         Positive {(good/total * 100) || 0}%
       </span> */}
-    </div>
+    </tr>
   )
 }
 export default Statistics
