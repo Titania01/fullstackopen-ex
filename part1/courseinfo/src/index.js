@@ -26,17 +26,19 @@ const App = () => {
   return (
     <div>
       <Header course={course}/>
-      <Content 
+      {/* <Content 
       name1={parts[0].name} 
       exercise1={parts[0].exercises} 
       name2={parts[1].name} 
       exercise2={parts[1].exercises} 
       name3={parts[2].name} 
-      exercise3={parts[2].exercises}/>
-      <Total 
+      exercise3={parts[2].exercises}/> */}
+      <Content parts={parts}/>
+      {/* <Total 
       exercise1={parts[0].exercises} 
       exercise2={parts[1].exercises} 
-      exercise3={parts[2].exercises} />  
+      exercise3={parts[2].exercises} />   */}
+      <Total parts={parts}/>
     </div>
   )
 }

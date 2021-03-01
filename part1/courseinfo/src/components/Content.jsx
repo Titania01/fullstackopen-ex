@@ -1,15 +1,21 @@
 import React from 'react'
 import Part from './Part'
 
-const Content = ({name1, name2, name3, exercise1, exercise2, exercise3}) => {
+const Content = ({parts}) => {
   return (
     <div>
-      <Part name= {name1} exercise={exercise1}/>
-      <Part name= {name2} exercise={exercise2}/>
-      <Part name= {name3} exercise={exercise3}/>
-
+       <p>
+        {parts[0].name} {parts[0].exercises}
+      </p>
+      <p>
+        {parts[1].name} {parts[1].exercises}
+      </p>
+      <p>
+        {parts[2].name} {parts[2].exercises}
+      </p>
     </div>
   )
 }
+
 
 export default Content
