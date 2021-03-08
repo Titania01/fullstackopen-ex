@@ -8,11 +8,23 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    
-    setPersons([...persons, { name: newName }])
-    setNewName("")
-  }
 
+    if (!newName.trim()) return null;
+    if (
+      persons.find(
+        (person) =>
+        person.name.toLowerCase().trim() === newName.toLowerCase().trim()
+      )
+    ){
+      alert(`${newName} is already added to phonebook`);
+      setNewName("")
+      return;
+    }
+    
+    setPersons([...persons, { name: newName.trim() }])
+    setNewName("")
+    
+  }
 
   return (
     <div>
@@ -24,7 +36,7 @@ const App = () => {
           <input value={newName} onChange={(e) => setNewName(e.target.value)} />
         </div>
         <div>
-          <button type="submit">add</button>
+          <button onClick={addPerson} type="submit">add</button>
         </div>
       </form>
       <h2>Numbers</h2>
