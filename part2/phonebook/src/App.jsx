@@ -2,10 +2,15 @@ import React, { useState } from 'react'
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', mobile: '040-123456' },
+    { name: 'Ada Lovelace', mobile: '39-44-5323523' },
+    { name: 'Dan Abramov', mobile: '12-43-234345' },
+    { name: 'Mary Poppendieck', mobile: '39-23-6423122' }
   ])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
+  const [ everything, setEverything] = useState("")
+
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -20,19 +25,29 @@ const App = () => {
       alert(`${newName} is already added to phonebook`);
       setNewName("")
       return;
-    }
+    };
     
     setPersons([
       ...persons, 
       { name: newName.trim(), mobile: newNumber.trim() }])
     setNewName("");
     setNewNumber('')
-    
-  }
+  };
+
+  const handleFilter = persons.filter(
+    (person) =>
+      person.name.trim().toLocaleLowerCase().indexOf(everything.trim().toLowerCase()) > -1
+  );
+   
+  const contactToShow = handleFilter.length ? handleFilter: persons;
 
   return (
     <div>
       <h2>Phonebook</h2>
+      
+      <div>
+        filter shown with: <input value={everything} onChange={(e) => setEverything(e.target.value)} />
+      </div>
       
       <form onSubmit={addPerson}>
         <div>
@@ -47,7 +62,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map((person) => (
+      {contactToShow.map((person) => (
         <p key={person.name}> {person.name} {person.mobile} </p> 
       ))} {" "}
     </div>
