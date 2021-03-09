@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import Filter from "./components/Filter"
+import Person from "./components/Person"
+import PersonForm from "./components/PersonForm"
 
 const App = () => {
   const [ persons, setPersons ] = useState([
@@ -38,14 +41,24 @@ const App = () => {
     (person) =>
       person.name.trim().toLocaleLowerCase().indexOf(everything.trim().toLowerCase()) > -1
   );
-   
+  
+  const handleNewNumber = (e) => setNewNumber(e.target.value)
+  const handleNewName = (e) => setNewName(e.target.value)
+  const handleEverything = (e) => setEverything(e.target.value)
   const contactToShow = handleFilter.length ? handleFilter: persons;
 
   return (
     <div>
       <h2>Phonebook</h2>
-      
-      <div>
+      <Filter everything={everything} handleEverything={handleEverything} />
+      <h3>Add a new</h3>
+      <PersonForm
+        addPerson={addPerson}
+        newName={newName}
+        handleNewName={handleNewName}
+        handleNewNumber={handleNewNumber}
+        />
+      {/* <div>
         filter shown with: <input value={everything} onChange={(e) => setEverything(e.target.value)} />
       </div>
       
@@ -60,11 +73,12 @@ const App = () => {
         <div>
           <button onClick={addPerson} type="submit">add</button>
         </div>
-      </form>
-      <h2>Numbers</h2>
+      </form> */}
+      <Person persons={contactToShow} />
+      {/* <h2>Numbers</h2>
       {contactToShow.map((person) => (
         <p key={person.name}> {person.name} {person.mobile} </p> 
-      ))} {" "}
+      ))} {" "} */}
     </div>
   )
 }
