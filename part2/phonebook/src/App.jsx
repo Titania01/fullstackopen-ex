@@ -20,6 +20,7 @@ const App = () => {
       .then(response => {
         console.log('promise fulfilled')
         setPersons(response.data)
+        setNewNumber(response.data)
   })
   }, [])
   console.log('render', persons.length, 'persons')
