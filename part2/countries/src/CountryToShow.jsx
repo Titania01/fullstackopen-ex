@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React from 'react'
 import Country from './Country'
 
-const CountryToShow = ({query, countries}) => {
-  const [displayCountry, setDisplayCountry] = useState([])
+const CountryToShow = ({query, countries, displayCountry, setDisplayCountry}) => {
+  // const [displayCountry, setDisplayCountry] = useState([])
   const countriesToDisplay = query.trim() ? countries.filter(country => country.name.toLowerCase().includes(query.toLowerCase())): [] 
   const countriesLength = countriesToDisplay.length
 
