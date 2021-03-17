@@ -1,15 +1,24 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Country from './Country'
 
 const CountryToShow = ({query, countries}) => {
+  const [displayCountry, setDisplayCountry] = useState([])
   const countriesToDisplay = query.trim() ? countries.filter(country => country.name.toLowerCase().includes(query.toLowerCase())): [] 
   const countriesLength = countriesToDisplay.length
+
   return (
     <div>
-      {
+      { !displayCountry.length ?
+        (
         countriesLength === 1 ? <Country country={countriesToDisplay} /> :
         countriesLength < 10 ? countriesToDisplay.map((country, countryIndex) =>
-      <p key={`country-index${countryIndex}`}>{country.name}</p>): <p>Too many matches, specify another filter</p>
+      <div key={`country-index${countryIndex}`} style={{display:'flex', alignItems:'center'}} >
+        <p>{country.name}</p>
+        <button onClick={() => setDisplayCountry([country])}>show</button>
+        </div>): 
+        <p>Too many matches, specify another filter</p>
+        ):
+        <Country country={displayCountry} />
       }
     </div>
   )
