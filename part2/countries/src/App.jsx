@@ -7,6 +7,7 @@ function App() {
   const [countries , setCountries] = useState([])
   const [query, setQuery] = useState('')
   const [displayCountry, setDisplayCountry] = useState([])
+  const [weather, setWeather] = useState([])
 
 
   useEffect(() => {
@@ -33,7 +34,7 @@ function App() {
         <input  id="name" type="text" value={query} onChange={(e) => handleInputChange(e)} autoComplete='off'/>
       </form>
       {/* <CountryToShow query={query} countries={countries} /> */}
-      <CountryToShow query={query} countries={countries} displayCountry ={displayCountry} setDisplayCountry={setDisplayCountry} />
+      <CountryToShow query={query} countries={countries} displayCountry ={displayCountry} setDisplayCountry={setDisplayCountry} weather={weather} setWeather={setWeather} />
       {/* {query.trim() && 
         <div className="countriesQueried">
         {
