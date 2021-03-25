@@ -36,21 +36,31 @@ const App = () => {
         person.name.toLowerCase().trim() === newName.toLowerCase().trim()
       )
     ){
-      alert(`${newName} is already added to phonebook`);
+      window.alert(`${newName} is already added to phonebook`);
       setNewName("")
       return;
     };
     
-    setPersons([
-      ...persons, 
-      { name: newName.trim(), mobile: newNumber.trim() }])
-    setNewName("");
-    setNewNumber('')
+    // setPersons([
+    //   ...persons, 
+    //   { name: newName.trim(), mobile: newNumber.trim() }])
+    // setNewName("");
+    // setNewNumber('')
+    const newObject = { name: newName.trim(), number: newNumber.trim()}
+    axios
+      .post("http://localhost:3004/persons", newObject)
+      .then((response) => {
+        setPersons([...persons, response.data])
+        setNewName("")
+        setNewNumber("")
+      })
   };
 
-  const handleFilter = persons.filter(
+ 
+
+  const handleFilter = everything.trim() && persons.filter(
     (person) =>
-      person.name.trim().toLocaleLowerCase().indexOf(everything.trim().toLowerCase()) > -1
+      (person.name).trim().toLowerCase().indexOf(everything.trim().toLowerCase()) > -1
   );
   
   const handleNewNumber = (e) => setNewNumber(e.target.value)
@@ -69,27 +79,7 @@ const App = () => {
         handleNewName={handleNewName}
         handleNewNumber={handleNewNumber}
         />
-      {/* <div>
-        filter shown with: <input value={everything} onChange={(e) => setEverything(e.target.value)} />
-      </div>
-      
-      <form onSubmit={addPerson}>
-        <div>
-          name:{" "} 
-          <input value={newName} onChange={(e) => setNewName(e.target.value)} />
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={(e) => setNewNumber(e.target.value)} />
-        </div>
-        <div>
-          <button onClick={addPerson} type="submit">add</button>
-        </div>
-      </form> */}
-      <Person persons={contactToShow} />
-      {/* <h2>Numbers</h2>
-      {contactToShow.map((person) => (
-        <p key={person.name}> {person.name} {person.mobile} </p> 
-      ))} {" "} */}
+      <Person persons={contactToShow} />  
     </div>
   )
 }
