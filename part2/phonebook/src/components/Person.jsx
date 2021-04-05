@@ -1,9 +1,11 @@
 import React from 'react'
 
 const Person = ({persons, handleDeliete}) => {
+  
   const handleDelete = person => {
     if(window.confirm(`Delete ${person.name}?`)) handleDeliete(person.id)
   }
+
   return (
     <div>
        <h2>Numbers</h2>

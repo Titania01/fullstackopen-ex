@@ -12,3 +12,7 @@ export const create = (newObject) => {
 export const remove = (id) => {
   return axios.delete(`${baseUrl}/${id}`)
 }
+
+export const changePerson = (id, newObject) => {
+  return axios.put(`${baseUrl}/${id}`, newObject)
+}

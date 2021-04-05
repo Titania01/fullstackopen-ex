@@ -22,28 +22,59 @@ const App = () => {
     event.preventDefault()
 
     if (!newName.trim()) return null;
-    if (
-      persons.find(
-        (person) =>
-        person.name.toLowerCase().trim() === newName.toLowerCase().trim()
-      )
-    ){
-      window.alert(`${newName} is already added to phonebook`);
-      setNewName("")
-      return;
-    };
-    
+    // if (
+    //   persons.find(
+    //     (person) =>
+    //     person.name.toLowerCase().trim() === newName.toLowerCase().trim()
+    //   )
+    // ){
+    //   window.alert(`${newName} is already added to phonebook`);
+    //   setNewName("")
+    //   return;
+    const existingUser = persons.find (
+      (person) =>
+        person.name.toLowerCase().trim() === newName.toLowerCase() 
+      );
+      if(existingUser) {
+        if(window.confirm (
+          `${newName} is already added to phonebook, replace the old number with a new one?`
+          )
+        ){
+          const id = existingUser.id;
+          phones
+            .changePerson(id, {
+              name: existingUser.name,
+              number: newNumber.trim()
+            })
+            .then((res) => {
+              setPersons((persons) => 
+                persons.map((person) => {
+                  if(person.id === res.data.id) person.number = res.data.number;
+                  return person;
+                })
+              );
+              setNewName("");
+              setNewNumber("");
+              return;
+            });
+            return;
+        }
     const newObject = { name: newName.trim(), number: newNumber.trim()}
     phones.create(newObject).then((res) => {
       setPersons([...persons, res.data])
       setNewName("");
       setNewNumber("");
     })
+  }
   };
 
   const filteredPersons = persons.filter(person => person.name?.trim().toLowerCase().indexOf(query.trim().toLowerCase()) > -1)
   
   const contactToShow = query.trim().length ? filteredPersons : persons
+
+  const handleDeliete = (id) => {
+    setPersons(contactToShow.filter(p => p.id!==id))
+  }
 
   return (
     <div>
@@ -56,7 +87,7 @@ const App = () => {
         handleNewName={e => setNewName(e.target.value)}
         handleNewNumber={e => setNewNumber(e.target.value)}
         />
-      <Person persons={contactToShow}  />  
+      <Person persons={contactToShow} handleDeliete={handleDeliete}  />  
     </div>
   )
 }
