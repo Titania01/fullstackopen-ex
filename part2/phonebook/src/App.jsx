@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Filter from "./components/Filter"
 import Person from "./components/Person"
 import PersonForm from "./components/PersonForm"
+import Notification from "./components/Notification"
+import "./index.css"
 
 import * as phones from "./services/phones"
 
@@ -10,6 +12,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [query, setQuery] = useState('')
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     phones.getAll().then((response)=> {
@@ -20,24 +23,17 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-
+    console.log('im here',{persons});
     if (!newName.trim()) return null;
-    // if (
-    //   persons.find(
-    //     (person) =>
-    //     person.name.toLowerCase().trim() === newName.toLowerCase().trim()
-    //   )
-    // ){
-    //   window.alert(`${newName} is already added to phonebook`);
-    //   setNewName("")
-    //   return;
-    const existingUser = persons.find (
+    
+    const existingUser = persons.find(
       (person) =>
-        person.name.toLowerCase().trim() === newName.toLowerCase() 
+        (person.name).toLowerCase().trim() === newName.toLowerCase() 
       );
-      if(existingUser) {
-        if(window.confirm (
-          `${newName} is already added to phonebook, replace the old number with a new one?`
+      
+        if(existingUser) {
+          if(window.confirm (
+            `${newName} is already added to phonebook, replace the old number with a new one?`
           )
         ){
           const id = existingUser.id;
@@ -55,17 +51,32 @@ const App = () => {
               );
               setNewName("");
               setNewNumber("");
-              return;
+              return null;
             });
-            return;
+            
         }
     const newObject = { name: newName.trim(), number: newNumber.trim()}
     phones.create(newObject).then((res) => {
       setPersons([...persons, res.data])
+      setMessage(`updated ${newName}`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000);
       setNewName("");
       setNewNumber("");
     })
-  }
+      }
+      else{
+        phones.create({name:newName,number:newNumber})
+        .then(({data}) => {
+          setPersons(persons.concat(data))
+          setMessage(`Added ${newName}`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000);
+        })
+      }
+
   };
 
   const filteredPersons = persons.filter(person => person.name?.trim().toLowerCase().indexOf(query.trim().toLowerCase()) > -1)
@@ -79,6 +90,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      { message && <Notification message={message}/> }
       <Filter everything={query} handleEverything={e => setQuery(e.target.value)} />
       <h3>Add a new</h3>
       <PersonForm
