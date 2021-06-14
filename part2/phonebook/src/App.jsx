@@ -76,6 +76,12 @@ const App = () => {
             setMessage(null)
           }, 5000);
         })
+        .catch(err =>{
+          setMessage(err.response.data.payload.errors.name.message)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000);
+        })
       }
 
   };
