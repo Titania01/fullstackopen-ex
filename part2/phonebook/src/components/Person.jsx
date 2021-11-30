@@ -23,14 +23,18 @@
 // export default Person
 
 const Person = ({ persons }) => {
+  console.log(persons);
   return (
     <div>
       <h2>Numbers</h2>
-      {persons.map((person) => (
-        <p key={person.name}>
-          {person.name} {person.phoneNumber}{" "}
-        </p>
-      ))}
+      {persons.map((person) => {
+        console.log(person);
+        return (
+          <p key={person.name}>
+            {person.name} {person.number}{" "}
+          </p>
+        );
+      })}
     </div>
   );
 };
